@@ -1,25 +1,16 @@
+import { useSelector } from 'react-redux';
 import { ContactItem } from '../ContactItem/ContactItem';
 import { Notify } from './ContactList.styled';
 
-export const ContactList = ({ onDeleteContact, filteredContacts }) => {
+export const ContactList = () => {
+  const contacts = useSelector(state => state.contacts);
+
   return (
     <div>
       <ul>
-        {filteredContacts.length > 0 ? (
-          filteredContacts.map(item => {
-            return (
-              <ContactItem
-                key={item.id}
-                values={item}
-                onDeleteContact={onDeleteContact}
-              />
-            );
-          })
-        ) : (
-          <Notify>
-            Your contatcs is empty. Please add contact to your list
-          </Notify>
-        )}
+        {contacts.map(item => (
+          <ContactItem key={item.id} values={item} />
+        ))}
       </ul>
     </div>
   );
