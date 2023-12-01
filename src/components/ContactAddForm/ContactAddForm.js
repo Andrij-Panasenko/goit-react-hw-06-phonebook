@@ -7,13 +7,33 @@ import {
   Button,
 } from './ContactAddForm.styled';
 import * as Yup from 'yup';
+import { addContact, getContacts } from 'redux/contactsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const contactSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Too short!').required('Name is required'),
   number: Yup.number().required('Must be filled'),
 });
 
-export const ContactAddForm = ({ addContact }) => {
+
+
+export const ContactAddForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+
+  const addNewContact = newContact => {
+    const hasContact = contacts.some(contact => contact.name === newContact.name);
+
+    if (hasContact) {
+      alert('A contact with that name already exists');
+      return;
+    };
+
+    dispatch(addContact(newContact));
+  }
+      
+
   return (
     <>
       <Formik
@@ -23,7 +43,7 @@ export const ContactAddForm = ({ addContact }) => {
         }}
         validationSchema={contactSchema}
         onSubmit={(values, actions) => {
-          addContact(values);
+          addNewContact(values);
           actions.resetForm();
         }}
       >

@@ -7,15 +7,13 @@ export const ContactItem = ({
 }) => {
   const dispatch = useDispatch();
 
-  const handleDelete = () => dispatch(deleteContact(id));
-
   return (
     <Contact>
       <NameWrapp>
         <p>{name}:</p>
         <p>{number}</p>
       </NameWrapp>
-      <Button type="button" onClick={() => handleDelete(id)}>
+      <Button type="button" onClick={() => dispatch(deleteContact(id))}>
         x
       </Button>
     </Contact>

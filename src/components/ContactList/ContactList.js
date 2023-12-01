@@ -6,10 +6,10 @@ import { getContacts } from 'redux/contactsSlice';
 
 export const ContactList = () => {
   const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilterValue)
+  const filters = useSelector(getFilterValue);
 
   const filteredContacts = contacts.filter(item => {
-    const hasContact = item.name.toLowerCase().includes(filter.toLowerCase());
+    const hasContact = item.name.toLowerCase().includes(filters.toLowerCase());
 
     return hasContact;
   });
